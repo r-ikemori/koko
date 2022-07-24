@@ -1,25 +1,28 @@
-# <KoKo>
+# KoKo
 
 ## サイト概要
 ### サイトテーマ
-<自分の気に入った場所(お店やスポット）のマップ上で共有ができるコミュニティサイト>
+-　自分の気に入った場所(お店やスポット）のマップ上で共有ができるコミュニティサイト
 
 ### テーマを選んだ理由
-<旅行に行く際にどんな場所があるか探すのが大変>
+-　旅行や引っ越し先で遊びに行く際にwebで検索しても定番なところが数件出てくるだけ、どのサイトも似たような場所が出てきてしまう
+-　ことが多く感じます。
+-　webに載っていない隠れたお店、場所がもっと簡単に見やすくわかればいいと思い、
+-　SNSのように共有したい、いいねがほしいといったユーザーが投稿できるコミュニティサイトがあればいい思いました。
+-　ただ写真や説明、住所だけではどのあたりなのかマップで照らし合わせてなければいけません、
+-　それでは手間がかかって大変ですのでマップで投稿してある場所が全て閲覧できマーキングもできるようにすることで現在地や宿泊先からの距離がわかりやすくスケジュールが立てやすいです。
 
 ### ターゲットユーザ
-<旅行者や自分だけしか知らない映えスポットやwebにないお気に入りのお店を共有したい人>
+-  旅行者や自分だけしか知らない映えスポットやwebにないお気に入りのお店を共有したい人。
+-  知らない土地にいく人がどんなところがあるか調べる方。
 
 ### 主な利用シーン
-<旅行など知らないところに遊ぶに行く際や知らない街に引っ越した際>
+-  旅行など知らないところに遊ぶに行く際や知らない街に引っ越した際
 
 ## 設計書
-  ER図
-- https://drive.google.com/file/d/1mJ4-ehCvxVVQa2odGfkePoBB-sHP-4DW/view?usp=sharing
--
-- テーブル定義書
-  https://docs.google.com/spreadsheets/d/1NCbMEkNrLb5vajHoRvIGtFH2ooRPYhMwXIrM10dbXPE/edit?usp=sharing
-<...>
+-  ER図　https://drive.google.com/file/d/1mJ4-ehCvxVVQa2odGfkePoBB-sHP-4DW/view?usp=sharing
+
+-  テーブル定義書　https://docs.google.com/spreadsheets/d/1NCbMEkNrLb5vajHoRvIGtFH2ooRPYhMwXIrM10dbXPE/edit?usp=sharing
 
 ## 開発環境
 - OS：Windows11(WindowsOS)
