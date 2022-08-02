@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
 
-  namespace :public do
-    get 'customers/show'
-    get 'customers/edit'
-  end
   # 顧客用
 devise_for :customers,skip: [:passwords], controllers: {
   registrations: "public/registrations",
   sessions: 'public/sessions'
 }
+
  scope module: :public do
    root to: 'homes#top'
    get 'customers/mypage', :to => "customers#show", as: "customers"
@@ -16,6 +13,7 @@ devise_for :customers,skip: [:passwords], controllers: {
    patch 'customers/mypage', :to => "customers#update"
    get 'customers/mypage/confirm', :to => "customers#confirm"
    patch 'customers/mypage/unsubscribe', :to => "customers#unsubscribe"
+   resources :maps, only: [:index]
  end
 
 
