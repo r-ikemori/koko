@@ -9,31 +9,84 @@
 <style>
 #map {
   height: 600px;
-  width: 600px;
+  width: 80%px;
 }
 </style>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
 <script>
 let map
 
 function initMap(){
-  function success(pos) {
-		var lat = pos.coords.latitude;
-		var lng = pos.coords.longitude;
-		var latlng = new google.maps.LatLng(lat, lng); //中心の緯度, 経度
-		var map = new google.maps.Map(document.getElementById('maps'), {
-			zoom: 17,
-			center: latlng
-		});
-		var marker = new google.maps.Marker({
-			position: latlng, //マーカーの位置（必須）
-			map: map //マーカーを表示する地図
-		});
-	}
+  geocoder = new google.maps.Geocoder()
+ const successFunc = function ( position )
+{
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: position.coords.latitude, lng: position.coords.longitude},
+    zoom: 12,
+  });
+
+  marker = new google.maps.Marker({
+    position:  {lat: position.coords.latitude, lng: position.coords.longitude},
+    map: map
+  });
+}
+ 
+ const errorFunc = function ( error )
+{
+	let errorMessage = {
+		0: "原因不明のエラーが発生しました…。" ,
+		1: "位置情報の取得が許可されませんでした…。" ,
+		2: "電波状況などで位置情報が取得できませんでした…。" ,
+		3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました…。" ,
+	} ;
+	alert( errorMessage[error.code] ) ;
+	 map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.6809591, lng: 139.7673068},
+    zoom: 12,
+  });
+
+  marker = new google.maps.Marker({
+    position:  {lat: 35.6809591, lng: 139.7673068},
+    map: map
+  });
+}
+
+let optionObj = {
+	"enableHighAccuracy": false ,
+	"timeout": 8000 ,
+	"maximumAge": 5000 ,
+} ;
+ 
+  navigator.geolocation.getCurrentPosition(successFunc , errorFunc , optionObj ) ;
+  
+  //クリックイベント
+  map.addEventListener('click', function(e) {
+    clickMap(e.latLng, map);
+  });
+}
+ 
+function clickMap(geo, map) {
+ 
+  document.getElementById('lat').value = geo.lat();
+  document.getElementById('lng').value = geo.lng();
+ 
+  //中心にスクロール
+  map.panTo(geo);
+ 
+  //マーカーの更新
+  marker.setMap(null);
+  marker = null;
+  marker = new google.maps.Marker({
+    map: map, position: geo 
+  });
+  }
+let geocoder
+
 function codeAddress(){
   let inputAddress = document.getElementById('address').value;
 
   geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    console.log(results[0]);
     if (status == 'OK') {
       map.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
@@ -48,4 +101,3 @@ function codeAddress(){
 }
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
