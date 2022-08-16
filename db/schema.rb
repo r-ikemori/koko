@@ -75,14 +75,6 @@ ActiveRecord::Schema.define(version: 2022_07_30_045608) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "maps", force: :cascade do |t|
-    t.string "address", null: false
-    t.float "latitude", null: false
-    t.float "longitude", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "post_comments", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "post_content_id", null: false
@@ -93,19 +85,12 @@ ActiveRecord::Schema.define(version: 2022_07_30_045608) do
 
   create_table "post_contents", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.integer "ranking_id", null: false
-    t.integer "map_id", null: false
-    t.integer "post_comment_id", null: false
-    t.integer "favorite_id", null: false
     t.string "name", null: false
     t.string "prefectures", null: false
     t.text "description", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "rankings", force: :cascade do |t|
-    t.integer "post_content_id", null: false
+    t.string "address", null: false
+    t.float "latitude", null: false
+    t.float "longitude", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

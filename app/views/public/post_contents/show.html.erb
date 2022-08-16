@@ -1,0 +1,34 @@
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <h4>投稿</h4>
+          <% if @post_content.image.attached? %>
+            <%= image_tag @customer.get_profile_image(100,100) %>
+          <% else %>
+            <%= image_tag 'no_image', size: "100x100" %>
+          <% end %>
+        </div>
+          <div class="col-9">
+            <div class="item-group row">
+
+              <label class="col-sm-5 col-item-label">位置情報</label>
+           <div class="col-sm-7">
+              <%= @post_content.address %>
+           </div>
+
+            <label class="col-sm-5 col-form-label">場所名</label>
+            <div class="col-sm-7">
+              <%= @post_content.name %>
+            </div>
+
+            <label class="col-sm-5 col-form-label">内容</label>
+            <div class="col-sm-7">
+              <%= @post_content.description %>
+            </div>
+
+          <%= link_to "編集する",edit_post_content_path(@post_content),class:"btn btn-success btn-sm mt-5" %>
+      </div>
+    </div>
+  </div>
+</main>

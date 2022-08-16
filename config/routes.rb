@@ -14,6 +14,7 @@ devise_for :customers,skip: [:passwords], controllers: {
    get 'customers/mypage/confirm', :to => "customers#confirm"
    patch 'customers/mypage/unsubscribe', :to => "customers#unsubscribe"
    resources :maps, only: [:index]
+   resources :post_contents, only: [:index, :show, :new, :create, :update, :destroy, :edit]
  end
 
 

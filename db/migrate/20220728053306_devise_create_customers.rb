@@ -8,7 +8,7 @@ class DeviseCreateCustomers < ActiveRecord::Migration[6.1]
       t.string :encrypted_password, null: false, default: ""
       t.boolean :is_active, null: false, default: true
       t.string :name, null: false
-      t.text :introduction, null: false
+      t.text :introduction, null: true
 
       ## Recoverable
       t.string   :reset_password_token

@@ -1,5 +1,6 @@
 class Public::MapsController < ApplicationController
   def index
+    @post_content = PostContent.new
   end
 
   private
