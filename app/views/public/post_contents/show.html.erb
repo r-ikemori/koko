@@ -1,10 +1,38 @@
 <main>
+  <div id='map'></div>
+    <style>
+     #map {
+       height: 400px;
+       width: 400px;
+     }
+     
+　　</style>
+　　 <script>
+　　　let map
+　　　
+　　　function initMap(){
+        geocoder = new google.maps.Geocoder()
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: <%= @post_content.latitude %>, lng: <%= @post_content.longitude %> },
+          zoom: 18,
+        });
+
+        marker = new google.maps.Marker({
+          position:  {lat: <%= @post_content.latitude %>, lng: <%= @post_content.longitude %> },
+          map: map
+        });
+      }
+      
+　　 </script>
+　　 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
+　　 
   <div class="container">
     <div class="row">
       <div class="col-3">
         <h4>投稿</h4>
           <% if @post_content.image.attached? %>
-            <%= image_tag @customer.get_profile_image(100,100) %>
+            <%= image_tag @post_content.image.variant(resize_to_limit: [100, 100]).processed %>
           <% else %>
             <%= image_tag 'no_image', size: "100x100" %>
           <% end %>
@@ -28,6 +56,34 @@
             </div>
 
           <%= link_to "編集する",edit_post_content_path(@post_content),class:"btn btn-success btn-sm mt-5" %>
+            </div>
+            
+          <div class="comment-wrapper border-top　mb-10">
+          <p class="mt-5">コメント一覧</p>
+          <% @comments.each do |c| %>
+            <div>
+              <% unless c.customer.blank? %>
+                <a href="<%= customers_path(c.customer_id) %>">
+                  <%= image_tag c.customer.get_profile_image(50,50),
+                    class:"rounded-circle icon_image mr-3 mb-3"%>
+                </a>
+                <% end %>
+              <%= c.customer.name unless c.customer.blank? %>
+              <br />
+              <%= c.content %>
+            </div>
+            <br />
+          <% end %>
+          <% if customer_signed_in? %>
+            <%= form_with(model: [@post_content, @comment], local: true, url: comments_path) do |f| %>
+              <%= f.text_area :content, class: "form-control", rows: 5 %>
+              <%= f.hidden_field :post_id, value: @post_content.id %>
+              <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
+                <i class="far fa-comments"></i> コメントする
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

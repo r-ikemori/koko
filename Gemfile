@@ -63,3 +63,4 @@ gem "gon"
 gem "dotenv-rails"
 
 gem "pry-rails"
+gem "mini_magick"

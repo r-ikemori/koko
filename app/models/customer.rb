@@ -3,7 +3,8 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
+         
+  has_many :comments
   has_one_attached :profile_image
 
   def get_profile_image(width, height)
