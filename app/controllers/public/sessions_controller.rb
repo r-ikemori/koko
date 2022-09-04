@@ -7,6 +7,12 @@ class Public::SessionsController < Devise::SessionsController
   # def new
   #   super
   # end
+  
+   def guest_sign_in
+    customer = Customer.guest
+    sign_in customer
+    redirect_to maps_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
 
   # POST /resource/sign_in
   # def create
@@ -33,6 +39,10 @@ class Public::SessionsController < Devise::SessionsController
         redirect_to new_customer_registration_path
       end
     end
+  end
+  
+  def after_sign_in_path_for(resource) 
+    maps_path
   end
 
   # If you have extra params to permit, append them to the sanitizer.

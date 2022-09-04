@@ -1,5 +1,5 @@
 
-<h2>gmap</h2>
+<h2>MAP</h2>
 
 <input id="address" type="textbox" value="GeekSalon">
 <input type="button" value="Encode" onclick="codeAddress()">
@@ -11,6 +11,8 @@
 #map {
   height: 600px;
   width: 50%px;
+  border-radius: 35px;
+  border: 15px solid #000;
 }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
@@ -123,7 +125,8 @@ function getAddress(latlng) {
       if (results[0].geometry) {
 
           // 住所を取得(日本の場合だけ「日本, 」を削除)
-         var address = results[0].formatted_address.replace(/^日本, /, '');
+         var address = results[0].formatted_address.split(" ")[1];
+       
          
             document.getElementById('post_content_address').value = address;
           
@@ -199,7 +202,6 @@ function markerEvent(i) {
 
 </script>
 
-緯度：<input type="text" id="lat" name="lat" value="" size="20">　経度：<input type="text" id="lng" name="lng" value="" size="20">
 
  <%= form_with model: @post_content, url:   new_post_content_path, method: :get do |f| %>
     <%= f.hidden_field :latitude, :value => "" %>

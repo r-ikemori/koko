@@ -1,12 +1,28 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
-nav-item {
+
+
+.nav-item {
    padding: 0 ;
    margin: 0 5px;
+   background-color: white;
  }
+ 
+.navbar {
+  background-color: #CCFF99	;
+}
+
+.notice{
+  background-color: #00CCFF	;
+}
 
 * {
 border-width: 2px !important;
 
+}
+
+main {
+    background-color:#00CCFF;
+    padding: 100px 50px;
 }

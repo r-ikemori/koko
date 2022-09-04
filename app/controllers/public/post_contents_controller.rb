@@ -22,14 +22,35 @@ class Public::PostContentsController < ApplicationController
     @comments = @post_content.comments
     @comment = @post_content.comments.build
   end
+  
+  def edit
+    @post_content = PostContent.find(params[:id])
+  end
+  
+  def update
+   post_content = PostContent.find(params[:id])
+   post_content.update(post_content_params)
+   redirect_to post_content_path(post_content.id)
+  end
 
   def index
+  end
+  
+  def ranking
+     
+    @prefecture = params[:prefecture]
+    if @prefecture
+      @post_contents = PostContent.includes(:favorites).where(prefectures: @prefecture).sort {|a,b| b.favorites.size <=> a.favorites.size}
+    else
+       @post_contents = PostContent.includes(:favorites).where(prefectures: "東京都").sort {|a,b| b.favorites.size <=> a.favorites.size}
+       @prefecture = "東京都"
+    end
   end
   
    private
 
   def post_content_params
-    params.require(:post_content).permit(:description, :address, :name, :latitude, :longitude, :image, :prefectures,)
+    params.require(:post_content).permit(:description, :address, :name, :latitude, :longitude, :image, :prefectures, main_images: [])
   end
 
 end

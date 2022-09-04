@@ -1,18 +1,23 @@
-<h1>Public::Homes#top</h1>
-<body>
-  <header>
-    <% if customer_signed_in? %>
-      <li>
-        <%= link_to "ログアウト", destroy_customer_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "新規登録", new_customer_registration_path %>
-      </li>
-      <li>
-        <%= link_to "ログイン", new_customer_session_path %>
-      </li>
-    <% end %>
-  </header>
-  <%= yield %>
-</body>
+
+<div class="top-image">
+  <body>
+    <div class="container pt-100">
+      <div class="row">
+        <%= link_to 'ゲストログイン', customers_guest_sign_in_path, method: :post, class: 'btn btn-outline-dark' %>
+        <% if customer_signed_in? %>
+          <div>
+            <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: 'btn btn-outline-dark' %>
+          </div>
+        <% else %>
+          <div>
+            <%= link_to "新規登録", new_customer_registration_path, class: 'btn btn-outline-dark' %>
+          </div>
+          <div>
+            <%= link_to "ログイン", new_customer_session_path, method: :post, class: 'btn btn-outline-dark' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%= yield %>
+  </body>
+</div>

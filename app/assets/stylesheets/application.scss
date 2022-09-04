@@ -13,3 +13,30 @@
  *= require_tree .
  *= require_self
  */
+ 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap');
+
+nav-item {
+   padding: 0 ;
+   margin: 0 5px;
+ }
+
+* {
+border-width: 2px !important;
+
+}
+
+.top-image {
+  height: 720px; 
+  background-image: image-url("top.png");
+}
+
+body {
+  font-family: 'Noto Serif JP', sans-serif;
+}

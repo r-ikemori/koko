@@ -2,7 +2,14 @@ class PostContent < ApplicationRecord
   geocoded_by :address
   after_validation :geocode
   has_one_attached :image
+  has_many_attached :main_images
   has_many :comments
+  belongs_to :customer
+  has_many :favorites, dependent: :destroy
+  
+  def favorited?(customer)
+   favorites.where(customer_id: customer.id).exists?
+  end
   
   def get_profile_image(width, height)
   unless profile_image.attached?
