@@ -35,7 +35,7 @@
               <%= link_to "マップ",maps_path, class: 'btn btn-outline-dark' %>
             </li>
             <li class="nav-item">
-              <%= link_to "マイページ",customers_path, class: 'btn btn-outline-dark' %>
+              <%= link_to "マイページ",customer_path(current_customer), class: 'btn btn-outline-dark' %>
 
             </li>
             <li class="nav-item">
@@ -46,26 +46,26 @@
               <%= link_to "ログアウト",destroy_customer_session_path, method: :delete, class: 'btn btn-outline-dark' %>
 
             </li>
-            <!--<% elsif current_admin %>-->
-            <!-- <li class="nav-item">-->
-            <!--  <%= link_to "マップ",maps_path, class: 'btn btn-outline-dark' %>-->
+            <% elsif current_admin %>
+             <li class="nav-item">
+              <%= link_to "マップ",admin_path, class: 'btn btn-outline-dark' %>
+
+            </li>
+            <!--<li class="nav-item">-->
+              <%#= link_to "ユーザー",admin_customers_path, class: 'btn btn-outline-dark' %>
 
             <!--</li>-->
             <!--<li class="nav-item">-->
-            <!--  <%= link_to "ユーザー",admin_customers_path, class: 'btn btn-outline-dark' %>-->
+              <%#= link_to "投稿一覧",admin_path, class: 'btn btn-outline-dark' %>
 
             <!--</li>-->
-            <!--<li class="nav-item">-->
-            <!--  <%= link_to "投稿一覧",admin_path, class: 'btn btn-outline-dark' %>-->
+            <li class="nav-item">
+              <%= link_to "ログアウト",destroy_admin_session_path, method: :delete, class: 'btn btn-outline-dark' %>
 
-            <!--</li>-->
-            <!--<li class="nav-item">-->
-            <!--  <%= link_to "ログアウト",destroy_admin_session_path, method: :delete, class: 'btn btn-outline-dark' %>-->
-
-            <!--</li>-->
+            </li>
             <% else %>
 
-            <!--<% end %>-->
+            <% end %>
 
             </ul>
           </div>

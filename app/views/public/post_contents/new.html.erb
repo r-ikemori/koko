@@ -36,7 +36,7 @@
         
                   <label class="col-sm-5 col-form-label">説明</label>
                     <div class="col-sm-7">
-                      <%= f.text_area :description %>
+                      <%= f.text_area :description, rows: 5  %>
                     </div>
                   <%= f.submit "投稿", class:"btn btn-success btn-sm" %>
             <% end %>
@@ -48,6 +48,8 @@
      #map {
        height: 400px;
        width: 400px;
+       border-radius: 35px;
+       border: 15px solid #000;
      }
      
 　　</style>

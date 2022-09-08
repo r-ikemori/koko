@@ -1,11 +1,11 @@
 <div class="container mx-auto" style="width: 1000px;">
   <p id="notice"></p>
      <h4>マイページ編集</h4>
-     <%= form_with model: @customer, url: customers_path, id: "form" do |f| %>
+     <%= form_with model: @customer, url: mypage_path, id: "form" do |f| %>
        <div>
          <%= f.file_field :profile_image, style: "display: none;", id: "file_field", onchange: "form_submit()" %>
          <% if @customer.profile_image.attached? %>
-           <%= image_tag @customer.get_profile_image(100,100), id: "profile_img"  %>
+           <%= image_tag @customer.get_profile_image(100,100), id: "profile_img", class: "rounded-circle", size: "150x150"  %>
          <% else %>
            <%= image_tag 'no_image', size: "100x100", id: "profile_img"  %>
          <% end %>
@@ -19,7 +19,7 @@
 
           <label class="col-sm-2 col-form-label">紹介文</label>
             <div class="col-sm-10">
-              <%= f.text_field :introduction %>
+              <%= f.text_area :introduction %>
             </div>
 
           <label class="col-sm-2 col-form-label">メールアドレス</label>

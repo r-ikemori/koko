@@ -67,12 +67,7 @@
             <div class="col-sm-7">
               <%= @post_content.description %>
             </div>
-            
-          <% if @post_content.customer_id == current_customer.id %>
-            <%= link_to "編集する",edit_post_content_path(@post_content),class:"btn btn-success btn-sm mt-5" %>
-              <div class="col-9"></div>
-            <%= link_to "削除",post_content_path(@post_content), data: {confirm: '本当に削除しますか？'}, method: :delete,class:"btn btn-danger btn-sm mt-5" %>
-          <% end %>
+
             </div>
             
           <div class="comment-wrapper border-top　mb-10">
@@ -90,10 +85,6 @@
                 <%= c.customer.name unless c.customer.blank? %>
                 <br />
                 <%= c.content %>
-                
-                <% if c.customer_id == current_customer.id %>
-                <%= link_to '削除', post_content_comment_path(@post_content, c), data: {confirm: '本当に削除しますか？'}, method: :delete %>
-                <%end%>
               </div>
               <br />
             <% end %>
@@ -108,15 +99,7 @@
             <% end %>
           <% end %>
           
-          <% if @post_content.favorited?(current_customer) %>
-            <%= link_to post_content_favorite_path(@post_content.id), method: :delete do %>
-              <span style="color:red;">いいね❤︎</span>
-            <% end %>
-          <% else %>
-            <%= link_to post_content_favorite_path(@post_content.id), method: :post do %>
-            <span>いいね❤︎</span>
-            <% end %>
-          <% end %>
+        
           <h5>いいね件数: <%= @post_content.favorites.count %></h5>
         </div>
       </div>

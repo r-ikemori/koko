@@ -11,19 +11,22 @@ devise_for :customers,skip: [:passwords], controllers: {
  end
 
  scope module: :public do
-   root to: 'homes#top'
-   get 'customers/mypage', :to => "customers#show", as: "customers"
-   get 'customers/mypage/edit', :to => "customers#edit", as: "edit_customers"
-   patch 'customers/mypage', :to => "customers#update"
-   get 'customers/mypage/confirm', :to => "customers#confirm"
-   patch 'customers/mypage/unsubscribe', :to => "customers#unsubscribe"
-   resources :maps, only: [:index]
-   resources :post_contents, only: [:index, :show, :new, :create, :update, :destroy, :edit] do
+  root to: 'homes#top'
+  resources :customers, only: [:show]
+  resource :mypage, only: [:edit, :update] do
+      collection do
+          get :confirm
+          patch :unsubscribe
+      end
+  end
+  resources :favorites, only: [:index]
+  resources :maps, only: [:index]
+  resources :post_contents, only: [:index, :show, :new, :create, :update, :destroy, :edit] do
        collection do 
            get :ranking
        end
-   resources :comments, only: [:create]
-   resource :favorites, only: [:create, :destroy]
+     resources :comments, only: [:create, :destroy]
+     resource :favorite, only: [:create, :destroy]
    end
  end
 
@@ -33,4 +36,17 @@ devise_for :customers,skip: [:passwords], controllers: {
 devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   sessions: "admin/sessions"
 }
+
+namespace :admin do
+    get '/', :to => "homes#top"
+    resources :post_contents, only: [:show, :destroy] do
+       collection do 
+           get :ranking
+       end
+    end
+    # resources :items, only: [:create, :edit, :index, :update, :new, :show]
+    # resources :customers, only: [:edit, :index, :update, :show]
+    # resources :orders, only: [:show, :update]
+    patch 'ordered_products/:id', :to => "ordered_products#update", as: "update_ordereb"
+  end
 end
