@@ -67,6 +67,11 @@
             <div class="col-sm-7">
               <%= @post_content.description %>
             </div>
+            
+             <% if current_admin %>
+               <div class="col-10"></div>
+               <%= link_to "削除",admin_post_content_path(@post_content), data: {confirm: '本当に削除しますか？'}, method: :delete,class:"btn btn-danger btn-sm m-3" %>
+             <% end %>
 
             </div>
             
@@ -85,20 +90,13 @@
                 <%= c.customer.name unless c.customer.blank? %>
                 <br />
                 <%= c.content %>
+                <% if c %>
+                  <%= link_to '削除', admin_post_content_comment_path(@post_content, c), data: {confirm: '本当に削除しますか？'}, method: :delete %>
+                <%end%>
               </div>
               <br />
             <% end %>
           </div>
-          <% if customer_signed_in? %>
-            <%= form_with(model: [@post_content, @comment], local: true) do |f| %>
-              <%= f.text_area :content, class: "form-control", rows: 5 %>
-              <%= f.hidden_field :post_id, value: @post_content.id %>
-              <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
-                <i class="far fa-comments"></i> コメントする
-              <% end %>
-            <% end %>
-          <% end %>
-          
         
           <h5>いいね件数: <%= @post_content.favorites.count %></h5>
         </div>

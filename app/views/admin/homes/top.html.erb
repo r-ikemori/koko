@@ -2,8 +2,8 @@
   <h1>MAP</h1>
 </div>
 
-<input id="address" type="textbox" value="地名を入力" style="margin: 20px;">
-<input type="button" value="検索" onclick="codeAddresmys()" style="width:80px; height:30px; background:#CCCCFF; border-radius:10px;" >
+<input id="address" type="textbox" value="" style="margin: 20px;">
+<input type="button" value="検索" onclick="codeAddress()" style="width:80px; height:30px; background:#CCCCFF; border-radius:10px;" >
 
 <div id='map'></div>
 
@@ -14,6 +14,10 @@
   width: 50%px;
   border-radius: 35px;
   border: 15px solid #000;
+}
+
+img {
+  width:100%;
 }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
@@ -44,8 +48,8 @@ function initMap(){
       
       infoWindow[<%= i %>] = new google.maps.InfoWindow({ // 吹き出しの追加
          content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
-         "説明：<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
-         '<% post_content.main_images.each do |image| %><%= image_tag image.variant(resize_to_limit: [100, 100]).processed, width:100 %><% end %>' + '</div>' + '</div>' +
+         "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
+         '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
          '<div class="info_bottom">' + '<%= link_to "詳細", admin_post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
        });
 

@@ -64,3 +64,5 @@ gem "dotenv-rails"
 
 gem "pry-rails"
 gem "mini_magick"
+gem 'kaminari'
+gem 'bootstrap4-kaminari-views'

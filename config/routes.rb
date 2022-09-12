@@ -43,10 +43,15 @@ namespace :admin do
        collection do 
            get :ranking
        end
+       resources :comments, only: [:destroy]
+    end
+    resources :customers, only: [:index, :show,] do
+      member do
+        patch :unsubscribe
+      end
     end
     # resources :items, only: [:create, :edit, :index, :update, :new, :show]
     # resources :customers, only: [:edit, :index, :update, :show]
     # resources :orders, only: [:show, :update]
-    patch 'ordered_products/:id', :to => "ordered_products#update", as: "update_ordereb"
   end
 end

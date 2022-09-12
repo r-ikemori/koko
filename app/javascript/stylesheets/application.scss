@@ -26,3 +26,14 @@ main {
     background-color:#00CCFF;
     padding: 100px 50px;
 }
+
+.image_size img{
+    width: 100%;
+    height: auto;
+}
+
+.slider img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}

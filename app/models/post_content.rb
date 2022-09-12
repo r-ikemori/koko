@@ -3,7 +3,7 @@ class PostContent < ApplicationRecord
   after_validation :geocode
   has_one_attached :image
   has_many_attached :main_images
-  has_many :comments
+  has_many :comments, dependent: :destroy
   belongs_to :customer
   has_many :favorites, dependent: :destroy
   

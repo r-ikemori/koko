@@ -1,6 +1,8 @@
 <main>
   <div class="ml-50 text-center">
-    <h3><%= @post_content.customer.name%>の投稿</h3>
+    <%= link_to customer_path(@post_content.customer.id) do %>
+      <h3><%= @post_content.customer.name%>の投稿</h3>
+    <%end%>
   </div>
   <div class="container">
     <div class="row">

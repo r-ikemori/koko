@@ -1,4 +1,4 @@
-<%= form_with url: ranking_post_contents_path, method: :get, local: true do |f| %>
+<%= form_with url: ranking_admin_post_contents_path, method: :get, local: true do |f| %>
   <%= f.select :prefecture,   ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮城県", "鹿児島県", "沖縄県"],
   {include_blank: '選択ボックス', selected: @prefecture },class: "" %>
   <%= f.submit "検索"%>
@@ -11,7 +11,7 @@
           <% if post.main_images.attached? %>
             <div class="image_slide mr-5">
               <% post.main_images.each do |image| %>
-                <div class="image_size"><%= image_tag(image, width: 300) %></div>
+                <div class="image_size"><%= image_tag(image, size: "300x300") %></div>
               <%end%>
             </div>
           <% else %>
@@ -23,7 +23,7 @@
             
           <label class="col-sm-5 col-item-label">投稿者</label>
            <div class="col-sm-7">
-             <%= link_to customer_path(post.customer.id) do %>
+             <%= link_to admin_customer_path(post.customer.id) do %>
                <%= post.customer.name%>
              <%end%>
            </div>
@@ -35,7 +35,7 @@
 
             <label class="col-sm-5 col-form-label">場所名</label>
             <div class="col-sm-7">
-              <%= link_to post_content_path(post.id) do %>
+              <%= link_to admin_post_content_path(post.id) do %>
                 <%= post.name %>
               <%end%>
             </div>
@@ -57,4 +57,3 @@
     });
   });
 </script>
-
