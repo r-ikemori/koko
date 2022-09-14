@@ -100,23 +100,24 @@
               <br />
             <% end %>
           </div>
-          <% if customer_signed_in? %>
-            <%= form_with(model: [@post_content, @comment], local: true) do |f| %>
-              <%= f.text_area :content, class: "form-control", rows: 5 %>
-              <%= f.hidden_field :post_id, value: @post_content.id %>
-              <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
-                <i class="far fa-comments"></i> コメントする
+          <% if customer_signed_in? && current_customer.email != "guest@example.com" %>
+                <%= form_with(model: [@post_content, @comment], local: true) do |f| %>
+                  <%= f.text_area :content, class: "form-control", rows: 5 %>
+                  <%= f.hidden_field :post_id, value: @post_content.id %>
+                  <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
+                    <i class="far fa-comments"></i> コメントする
+                  <% end %>
+                <% end %>
+              
+            
+            <% if @post_content.favorited?(current_customer) %>
+              <%= link_to post_content_favorite_path(@post_content.id), method: :delete do %>
+                <span style="color:red;">いいね❤︎</span>
               <% end %>
-            <% end %>
-          <% end %>
-          
-          <% if @post_content.favorited?(current_customer) %>
-            <%= link_to post_content_favorite_path(@post_content.id), method: :delete do %>
-              <span style="color:red;">いいね❤︎</span>
-            <% end %>
-          <% else %>
-            <%= link_to post_content_favorite_path(@post_content.id), method: :post do %>
-            <span>いいね❤︎</span>
+            <% else %>
+              <%= link_to post_content_favorite_path(@post_content.id), method: :post do %>
+              <span>いいね❤︎</span>
+              <% end %>
             <% end %>
           <% end %>
           <h5>いいね件数: <%= @post_content.favorites.count %></h5>

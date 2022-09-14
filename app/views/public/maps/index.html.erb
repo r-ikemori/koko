@@ -43,12 +43,15 @@ function initMap(){
       });
       
       infoWindow[<%= i %>] = new google.maps.InfoWindow({ // 吹き出しの追加
-         content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
-         '<% post_content.main_images.each do |image| %><%= image_tag image.variant(resize_to_limit: [100, 100]).processed, width:100 %><% end %>' + '</div>' + '</div>' +
-         '<div class="info_bottom">' + '<%= link_to "詳細", post_content, class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
+         content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
+         "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
+         '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
+         '<div class="info_bottom">' + '<%= link_to "詳細", post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
        });
 
       markerEvent(<%= i %>); // マーカーにクリックイベントを追加
+
+      
     <% end %>
     
     marker = new google.maps.Marker({});
@@ -186,34 +189,37 @@ function codeAddress(){
 // マーカーにクリックイベントを追加
 function markerEvent(i) {
   
-  google.maps.event.addListener(markers[i], 'click', function(){ // マーカーをクリックしたとき
+  markers[i].addListener('click', function(){ // マーカーをクリックしたとき
     console.log(infoWindow[i]);
     console.log(map);
     console.log(markers[i]);
     infoWindow[i].open(map, markers[i]); // 吹き出しの表示
-    
-    var checkElement = setInterval(function() {
-      let elm = $('.image_slide_'+ i);
-      console.log({elm, i});
-      if (elm.length > 0) {
-        elm.slick({ dots: true });
-        clearInterval(checkElement);
-      }
-    }, 100);
+  });
+  
+  infoWindow[i].addListener('domready', function(){
+    let elm = $('.image_slide_' + i);
+    console.log({elm, i});
+   
+    if (elm.not('.slick-initialized').length > 0) {
+      elm.slick({ dots: true });
+    }
   });
 }
+
 
 </script>
 
  <div class="container">
   <div class="row">
-    <div class="col-3 mt-3">   
-     <%= form_with model: @post_content, url:   new_post_content_path, method: :get do |f| %>
-        <%= f.hidden_field :latitude, :value => "" %>
-        <%= f.hidden_field :longitude, :value => "" %>
-        <%= f.hidden_field :address, :value => "" %>
-        <%= f.submit "この場所で投稿", class:"btn btn-success btn-sm" %>
-     <% end %>
+    <div class="col-3 mt-3">
+      <% if customer_signed_in? && current_customer.email != "guest@example.com" %>   
+         <%= form_with model: @post_content, url:   new_post_content_path, method: :get do |f| %>
+            <%= f.hidden_field :latitude, :value => "" %>
+            <%= f.hidden_field :longitude, :value => "" %>
+            <%= f.hidden_field :address, :value => "" %>
+            <%= f.submit "この場所で投稿", class:"btn btn-success btn-sm" %>
+         <% end %>
+      <%end%>
     </div>
     <div class="col-6"></div>
     <div class="col-3 mt-2 mb-2">

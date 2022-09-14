@@ -191,20 +191,20 @@ function codeAddress(){
 // マーカーにクリックイベントを追加
 function markerEvent(i) {
   
-  google.maps.event.addListener(markers[i], 'click', function(){ // マーカーをクリックしたとき
+  markers[i].addListener('click', function(){ // マーカーをクリックしたとき
     console.log(infoWindow[i]);
     console.log(map);
     console.log(markers[i]);
     infoWindow[i].open(map, markers[i]); // 吹き出しの表示
-    
-    var checkElement = setInterval(function() {
-      let elm = $('.image_slide_'+ i);
-      console.log({elm, i});
-      if (elm.length > 0) {
-        elm.slick({ dots: true });
-        clearInterval(checkElement);
-      }
-    }, 100);
+  });
+  
+  infoWindow[i].addListener('domready', function(){
+    let elm = $('.image_slide_' + i);
+    console.log({elm, i});
+   
+    if (elm.not('.slick-initialized').length > 0) {
+      elm.slick({ dots: true });
+    }
   });
 }
 

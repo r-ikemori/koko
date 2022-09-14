@@ -1,4 +1,6 @@
 class Public::MypagesController < ApplicationController
+  
+  before_action :check_guest_customer
 
   def edit
     @customer = current_customer
@@ -25,6 +27,12 @@ class Public::MypagesController < ApplicationController
 
   def customer_params
     params.require(:customer).permit(:name, :introduction, :email, :profile_image)
+  end
+  
+  def check_guest_customer
+    if current_customer.email == "guest@example.com"
+      redirect_to root_path
+    end
   end
 
 end
