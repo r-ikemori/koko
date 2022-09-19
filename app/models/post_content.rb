@@ -6,6 +6,7 @@ class PostContent < ApplicationRecord
   has_many :comments, dependent: :destroy
   belongs_to :customer
   has_many :favorites, dependent: :destroy
+  validates :main_images, presence: true
   
   def favorited?(customer)
    favorites.where(customer_id: customer.id).exists?

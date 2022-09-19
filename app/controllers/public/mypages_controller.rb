@@ -1,5 +1,5 @@
 class Public::MypagesController < ApplicationController
-  
+  before_action :authenticate_customer!, except: [:top]
   before_action :check_guest_customer
 
   def edit

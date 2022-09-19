@@ -40,10 +40,10 @@
 　　  </div>
   
     
-      <div class="col-6 p-5">
+      <div class="col-6 image_frame">
         
           <% if @post_content.main_images.attached? %>
-            <div class="image_slide">
+            <div class="image_slide m-4">
               <% @post_content.main_images.each do |image| %>
                 <div class="image_size"><%= image_tag(image, width: 450) %></div>
               <%end%>
@@ -53,7 +53,7 @@
           <% end %>
         </div>
           <div class="col-8">
-            <div class="item-group row">
+            <div class="item-group row mt-5">
 
               <label class="col-sm-5 col-item-label">位置情報</label>
            <div class="col-sm-7">

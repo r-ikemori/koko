@@ -1,12 +1,12 @@
-いいね一覧
+<h3 class="m-5 bg-warning bg-gradient text-center">♡いいね一覧♡</h3>
 <% @favorite_posts.each do |post|%>
  <div class="container" style="margin-top: 50px;">
     <div class="row">
       <div class="col-5">
           <% if post.main_images.attached? %>
-            <div class="image_slide">
+            <div class="image_slide mr-5">
               <% post.main_images.each do |image| %>
-                <div class="image_size"><%= image_tag(image, width: 300) %></div>
+                <div class="image_size"><%= image_tag(image, size: "200x200") %></div>
               <%end%>
             </div>
           <% else %>
@@ -18,12 +18,16 @@
             
           <label class="col-sm-5 col-item-label">投稿者</label>
            <div class="col-sm-7">
-              <%= post.customer.name%>
+              <%= link_to customer_path(post.customer.id) do %>
+               <%= post.customer.name%>
+              <%end%>
            </div>
 
            <label class="col-sm-5 col-item-label">位置情報</label>
            <div class="col-sm-7">
-              <%= post.address %>
+             <%= link_to post_content_path(post.id) do %>
+               <%= post.address %>
+             <%end%>
            </div>
 
             <label class="col-sm-5 col-form-label">場所名</label>
@@ -44,6 +48,7 @@
     $('.image_slide').slick({
         dots: true,
         centerMode: true,
+        centerPadding: "0px",
     });
   });
 </script>

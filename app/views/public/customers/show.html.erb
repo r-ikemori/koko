@@ -8,11 +8,11 @@
            <%= image_tag 'no_image', size: "100x100" %>
         <% end %>
     </div>
-    <div class="col-6">
+    <div class="col-6 profile_image">
       <div class="row">
-        <label class="col-6">名前</label>
+        <label class="col-6">名前：</label>
           <div><%= @customer.name %></div>
-        <label class="col-6">プロフィール</label>
+        <label class="col-6">プロフィール：</label>
           <div><%= @customer.introduction %></div>
       </div>
     </div>
@@ -31,9 +31,9 @@
 <% @post_contents.each do |post|%>
  <div class="container" style="margin-top: 50px;">
     <div class="row">
-      <div class="col-5">
+      <div class="col-5 image_frame">
           <% if post.main_images.attached? %>
-            <div class="image_slide mr-5">
+            <div class="image_slide m-4">
                 <% post.main_images.each do |image| %>
                   <div class="image_size"><%= image_tag(image, size: "200x200") %></div>
                 <%end%>
@@ -41,20 +41,21 @@
             <% else %>
               <%= image_tag 'no_image', size: "100x100" %>
             <% end %>
-        </div>
-          <div class="col-7">
-            <div class="item-group row">
+      </div>
+       <div class="col-1"></div>
+          <div class="col-6">
+            <div class="item-group row mt-3">
 
            <label class="col-sm-5 col-item-label">位置情報</label>
            <div class="col-sm-7">
-              <%= post.address %>
+             <%= link_to post_content_path(post.id) do %>
+               <%= post.address %>
+             <%end%>
            </div>
 
             <label class="col-sm-5 col-form-label">場所名</label>
             <div class="col-sm-7">
-              <%= link_to post_content_path(post.id) do %>
-                <%= post.name %>
-              <%end%>
+              <%= post.name %>
             </div>
 
             <label class="col-sm-5 col-form-label">内容</label>

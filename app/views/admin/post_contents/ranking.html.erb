@@ -10,12 +10,9 @@
       <div class="col-5">
           <% if post.main_images.attached? %>
             <div class="image_slide mr-5">
-              <%= link_to main_images, "data-lightbox" => main_images
-              do %>
                 <% post.main_images.each do |image| %>
                   <div class="image_size"><%= image_tag(image, size: "300x300") %></div>
-                <%end%>  
-              <%end%>
+                <%end%>
             </div>
           <% else %>
             <%= image_tag 'no_image', size: "100x100" %>
@@ -47,6 +44,7 @@
             <div class="col-sm-7">
               <%= post.description %>
             </div>
+            <h5>いいね: <%= post.favorites.count %></h5>
     </div>
   </div>
 <%end%>

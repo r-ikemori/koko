@@ -1,4 +1,5 @@
 class Public::MapsController < ApplicationController
+  before_action :authenticate_customer!, except: [:top]
   def index
     @post_content = PostContent.new
     @post_contents = PostContent.all
