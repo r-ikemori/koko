@@ -50,8 +50,5 @@ namespace :admin do
         patch :unsubscribe
       end
     end
-    # resources :items, only: [:create, :edit, :index, :update, :new, :show]
-    # resources :customers, only: [:edit, :index, :update, :show]
-    # resources :orders, only: [:show, :update]
   end
 end
