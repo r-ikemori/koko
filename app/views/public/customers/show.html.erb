@@ -3,11 +3,7 @@
     <div class="col-4">
       <h3>プロフィール</h3>
         <% if @customer.profile_image.attached? %>
-          <% if Rails.env.development? %>
             <%= image_tag @customer.get_profile_image(200,200), class: "rounded-circle", size: "150x150" %>
-          <% else %>
-            <%= image_tag asset_path(@customer.get_profile_image(200,200), :class => "rounded-circle", :size => "150x150") %>
-          <% end %>
         <% else %>
            <%= image_tag 'no_image.jpg', class: "rounded-circle", size: "100x100" %>
         <% end %>
