@@ -7,7 +7,7 @@
          <% if @customer.profile_image.attached? %>
            <%= image_tag @customer.get_profile_image(100,100), id: "profile_img", class: "rounded-circle", size: "150x150"  %>
          <% else %>
-           <%= image_tag 'no_image', size: "100x100", id: "profile_img"  %>
+           <%= image_tag 'no_image.jpg', size: "100x100", id: "profile_img"  %>
          <% end %>
        </div>
 
