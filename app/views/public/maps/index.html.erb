@@ -121,6 +121,28 @@ function initMap(){
       position:  {lat: 35.6809591, lng: 139.7673068},
       map: map
     });
+    
+    getAddress(marker.getPosition());
+    
+    <% @post_contents.each_with_index do |post_content, i| %>
+      // 
+      markerLatLng = new google.maps.LatLng({lat: <%= post_content.latitude %>, lng: <%= post_content.longitude %>})
+      markers[<%= i %>] = new google.maps.Marker({ // マーカーの追加
+         position: markerLatLng, // マーカーを立てる位置を指定
+         map: map // マーカーを立てる地図を指定
+      });
+      
+      infoWindow[<%= i %>] = new google.maps.InfoWindow({ // 吹き出しの追加
+         content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
+         "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
+         '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
+         '<div class="info_bottom">' + '<%= link_to "詳細", post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
+       });
+
+      markerEvent(<%= i %>); // マーカーにクリックイベントを追加
+      
+    <% end %>
+      
     map.addListener('click', function(e) {
       map.panTo(e.latLng);
       getAddress(e.latLng);
