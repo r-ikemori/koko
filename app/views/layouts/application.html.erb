@@ -38,7 +38,7 @@
             <ul class="navbar-nav ml-auto">
             <% if current_customer %>
             <li class="nav-item">
-              <%= link_to maps_path, class: 'btn btn-outline-dark' do %>
+              <%= link_to maps_path, data: {"turbolinks" => false}, class: 'btn btn-outline-dark' do %>
                 <i class="fas fa-map-marked-alt"></i> MAP
               <%end%>
             </li>

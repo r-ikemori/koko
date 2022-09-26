@@ -1,3 +1,5 @@
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" ></script>
+
 <div class="ml-50 text-center">
   <h1>MAP</h1>
 </div>
@@ -16,7 +18,7 @@
   border: 15px solid #000;
 }
 </style>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
+
 
 
  <div class="container">
@@ -50,8 +52,11 @@ $('.button_map').on('click', function() {
   initMap();
 });
 
+
+
 function initMap(){
   geocoder = new google.maps.Geocoder()
+  
   const successFunc = function ( position ){
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: position.coords.latitude, lng: position.coords.longitude},
@@ -69,19 +74,19 @@ function initMap(){
       // 
       markerLatLng = new google.maps.LatLng({lat: <%= post_content.latitude %>, lng: <%= post_content.longitude %>})
       markers[<%= i %>] = new google.maps.Marker({ // マーカーの追加
-         position: markerLatLng, // マーカーを立てる位置を指定
-         map: map // マーカーを立てる地図を指定
+        position: markerLatLng, // マーカーを立てる位置を指定
+        map: map // マーカーを立てる地図を指定
       });
       
       infoWindow[<%= i %>] = new google.maps.InfoWindow({ // 吹き出しの追加
-         content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
-         "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
-         '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
-         '<div class="info_bottom">' + '<%= link_to "詳細", post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
-       });
+        content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
+        "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
+        '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
+        '<div class="info_bottom">' + '<%= link_to "詳細", post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
+      });
 
       markerEvent(<%= i %>); // マーカーにクリックイベントを追加
-
+      
       
     <% end %>
     
@@ -157,7 +162,7 @@ function initMap(){
 	  "maximumAge": 5000 ,
   };
  
-  navigator.geolocation.getCurrentPosition(successFunc , errorFunc , optionObj ) ;
+   navigator.geolocation.getCurrentPosition(successFunc , errorFunc , optionObj ) ;
  
 }
 
