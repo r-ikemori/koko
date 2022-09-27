@@ -26,9 +26,7 @@
            <%end%>
          </a>
          <div class="col-4"></div>
-         　<%if current_admin %>
-              <h3 >管理者画面</h3>
-           <%end%>
+         　
            
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +63,7 @@
             
             <% elsif current_admin %>
              <li class="nav-item">
-              <%= link_to "マップ",admin_path, class: 'btn btn-outline-dark' %>
+              <%= link_to "マップ",admin_path, data: {"turbolinks" => false}, class: 'btn btn-outline-dark' %>
 
             </li>
             <li class="nav-item">
