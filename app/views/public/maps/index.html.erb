@@ -11,12 +11,12 @@
 
 
 <style>
-#map {
-  height: 600px;
-  width: 50%px;
-  border-radius: 35px;
-  border: 15px solid #000;
-}
+  #map {
+    height: 600px;
+    width: 50%px;
+    border-radius: 35px;
+    border: 15px solid #000;
+  }
 </style>
 
 
@@ -55,6 +55,7 @@ $('.button_map').on('click', function() {
 
 
 function initMap(){
+
   geocoder = new google.maps.Geocoder()
   
   const successFunc = function ( position ){
