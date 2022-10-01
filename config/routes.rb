@@ -12,6 +12,7 @@ devise_for :customers,skip: [:passwords], controllers: {
 
  scope module: :public do
   root to: 'homes#top'
+  get "/about" => "homes#about", as: "about"
   resources :customers, only: [:show]
   resource :mypage, only: [:edit, :update] do
       collection do

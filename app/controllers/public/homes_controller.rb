@@ -3,5 +3,8 @@ class Public::HomesController < ApplicationController
     render layout: "homes"
   end
   
+  def about
+  
+  end
   
 end

@@ -16,24 +16,25 @@
     width: 50%px;
     border-radius: 35px;
     border: 15px solid #000;
+    margin-button: 50px;
   }
 </style>
 
 
 
  <div class="container">
-  <div class="row">
-    <div class="col-3 mt-3">
+  <div class="row m-3">
+    <div class="col-8">
       <% if customer_signed_in? && current_customer.email != "guest@example.com" %>   
          <%= form_with model: @post_content, url:   new_post_content_path, method: :get do |f| %>
             <%= f.hidden_field :latitude, :value => "" %>
             <%= f.hidden_field :longitude, :value => "" %>
             <%= f.hidden_field :address, :value => "" %>
-            <%= f.submit "この場所で投稿", class:"btn btn-success btn-sm" %>
+            <%= f.submit "この場所で投稿", class:"btn btn-success btn-sm" %>※投稿する場所をクリックor現在地ボタンをクリック後に押してください！
          <% end %>
       <%end%>
     </div>
-    <div class="col-6"></div>
+    <div class="col-1"></div>
     <div class="col-3 mt-2 mb-2">
       <button class="button_map">現在地</button>
     </div>
