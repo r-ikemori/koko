@@ -32,14 +32,16 @@
 
            <label class="col-sm-5 col-item-label">位置情報</label>
            <div class="col-sm-7">
-              <%= post.address %>
+             <%= link_to post_content_path(post.id) do %>
+               <%= post.address %>
+             <%end%>
            </div>
 
             <label class="col-sm-5 col-form-label">場所名</label>
             <div class="col-sm-7">
-              <%= link_to post_content_path(post.id) do %>
+              
                 <%= post.name %>
-              <%end%>
+              
             </div>
 
             <label class="col-sm-5 col-form-label">内容</label>
