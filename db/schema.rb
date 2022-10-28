@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 2022_08_27_111003) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_deleted", default: false
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
@@ -85,14 +84,6 @@ ActiveRecord::Schema.define(version: 2022_08_27_111003) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_favorites_on_customer_id"
     t.index ["post_content_id"], name: "index_favorites_on_post_content_id"
-  end
-
-  create_table "post_comments", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "post_content_id", null: false
-    t.text "comment", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "post_contents", force: :cascade do |t|

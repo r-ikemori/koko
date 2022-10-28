@@ -13,7 +13,6 @@ class Public::MypagesController < ApplicationController
   end
 
   def confirm
-
   end
 
   def unsubscribe
@@ -28,11 +27,8 @@ class Public::MypagesController < ApplicationController
   def customer_params
     params.require(:customer).permit(:name, :introduction, :email, :profile_image)
   end
-  
-  def check_guest_customer
-    if current_customer.email == "guest@example.com"
-      redirect_to root_path
-    end
-  end
 
+  def check_guest_customer
+    redirect_to root_path if current_customer.email == 'guest@example.com'
+  end
 end

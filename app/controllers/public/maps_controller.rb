@@ -10,5 +10,4 @@ class Public::MapsController < ApplicationController
   def map_params
     params.require(:map).permit(:title, :content, :address, :latitude, :longitude)
   end
-
 end
