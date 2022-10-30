@@ -1,11 +1,11 @@
 <h3 class="m-5 bg-info bg-gradient text-center">～各都道府県のいいねランキング～</h3>
 <%= form_with url: ranking_post_contents_path, method: :get, local: true do |f| %>
-  <%= f.select :prefecture,   ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮城県", "鹿児島県", "沖縄県"],
-  {include_blank: '選択ボックス', selected: @prefecture },class: "" %>
-  <%= f.submit "検索",class: "btn btn-warning mb-2" %>
-<%end%>
-<% @post_contents.each do |post|%>
-  
+  <%= f.select :prefecture, %w[北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮城県 鹿児島県 沖縄県],
+               { include_blank: '選択ボックス', selected: @prefecture }, class: '' %>
+  <%= f.submit '検索', class: 'btn btn-warning mb-2' %>
+<% end %>
+<% @post_contents.each do |post| %>
+
   <div class="container" style="margin-top: 50px;">
     <div class="row">
       <div class="col-5 image_frame">
@@ -13,35 +13,35 @@
             <div class="image_slide m-4">
               <% post.main_images.each do |image| %>
                 <div class="image_size"><%= image_tag(image, width: 300) %></div>
-              <%end%>
+              <% end %>
             </div>
           <% else %>
-            <%= image_tag 'no_image', size: "100x100" %>
+            <%= image_tag 'no_image', size: '100x100' %>
           <% end %>
         </div>
         <div class="col-1"></div>
           <div class="col-6">
             <div class="item-group row">
-            
+
           <label class="col-sm-5 col-item-label">投稿者</label>
            <div class="col-sm-7">
              <%= link_to customer_path(post.customer.id) do %>
-               <%= post.customer.name%>
-             <%end%>
+               <%= post.customer.name %>
+             <% end %>
            </div>
 
            <label class="col-sm-5 col-item-label">位置情報</label>
            <div class="col-sm-7">
              <%= link_to post_content_path(post.id) do %>
                <%= post.address %>
-             <%end%>
+             <% end %>
            </div>
 
             <label class="col-sm-5 col-form-label">場所名</label>
             <div class="col-sm-7">
-              
+
                 <%= post.name %>
-              
+
             </div>
 
             <label class="col-sm-5 col-form-label">内容</label>
@@ -51,7 +51,7 @@
             <h5>いいね: <%= post.favorites.count %></h5>
     </div>
   </div>
-<%end%>
+<% end %>
 
 <script>
   $(function() {
@@ -62,4 +62,3 @@
     });
   });
 </script>
-

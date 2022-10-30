@@ -1,11 +1,11 @@
 <main>
-  
-  <script async defer src=<%= "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_API_KEY']}&callback=initMap" %>></script>
-  　 
+
+  <script async defer src=<%= "https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_API_KEY', nil)}&callback=initMap" %>></script>
+
   <div class="ml-50 text-center">
     <%= link_to customer_path(@post_content.customer.id) do %>
-      <h3><%= @post_content.customer.name%>の投稿</h3>
-    <%end%>
+      <h3><%= @post_content.customer.name %>の投稿</h3>
+    <% end %>
   </div>
   <div class="container">
     <div class="row">
@@ -19,38 +19,37 @@
            border-radius: 35px;
            border: 15px solid #000;
          }
-         
+
     　　</style>
     　　<script>
     　　let = map
-    　　
+
     　　  function initMap(){
             map = new google.maps.Map(document.getElementById('map'), {
               center: {lat: <%= @post_content.latitude %>, lng: <%= @post_content.longitude %> },
               zoom: 15,
             });
-    
+
             marker = new google.maps.Marker({
               position:  {lat: <%= @post_content.latitude %>, lng: <%= @post_content.longitude %> },
               map: map
             });
           }
-          
+
     　　 </script>
-    　
+
 　　  </div>
-  
-    
+
       <div class="col-6 image_frame">
-        
+
           <% if @post_content.main_images.attached? %>
             <div class="image_slide m-4">
               <% @post_content.main_images.each do |image| %>
                 <div class="image_size"><%= image_tag(image, width: 450) %></div>
-              <%end%>
+              <% end %>
             </div>
           <% else %>
-            <%= image_tag 'no_image', size: "100x100" %>
+            <%= image_tag 'no_image', size: '100x100' %>
           <% end %>
       </div>
           <div class="col-8">
@@ -70,47 +69,47 @@
             <div class="col-sm-7">
               <%= @post_content.description %>
             </div>
-            
+
           <% if @post_content.customer_id == current_customer.id %>
-            <%= link_to "編集する",edit_post_content_path(@post_content),class:"btn btn-success btn-sm mt-5" %>
+            <%= link_to '編集する', edit_post_content_path(@post_content), class: 'btn btn-success btn-sm mt-5' %>
               <div class="col-9"></div>
-            <%= link_to "削除",post_content_path(@post_content), data: {confirm: '本当に削除しますか？'}, method: :delete,class:"btn btn-danger btn-sm mt-5" %>
+            <%= link_to '削除', post_content_path(@post_content), data: { confirm: '本当に削除しますか？' }, method: :delete,
+                                                                class: 'btn btn-danger btn-sm mt-5' %>
           <% end %>
             </div>
-            
+
           <div class="comment-wrapper border-top　mb-10">
             <p class="mt-5">コメント一覧</p>
           <div class="comment-index">
             <% @comments.each do |c| %>
               <div>
                 <% unless c.customer.blank? %>
-                　<%= c.created_at.strftime('%Y/%m/%d %H:%M:%S') %><br>　
+                　<%= c.created_at.strftime('%Y/%m/%d %H:%M:%S') %><br>
                   <a href="<%= customer_path(c.customer_id) %>">
-                    <%= image_tag c.customer.get_profile_image(50,50),
-                      class:"rounded-circle icon_image mr-3 mb-3"%>
+                    <%= image_tag c.customer.get_profile_image(50, 50),
+                                  class: 'rounded-circle icon_image mr-3 mb-3' %>
                   </a>
                   <% end %>
-                <%= c.customer.name unless c.customer.blank? %>
-                <br />
+                <%= c.customer.name if c.customer.present? %>
+                <br>
                 <%= c.content %>
-                
+
                 <% if c.customer_id == current_customer.id %>
-                <%= link_to '削除', post_content_comment_path(@post_content, c), data: {confirm: '本当に削除しますか？'}, method: :delete %>
-                <%end%>
+                <%= link_to '削除', post_content_comment_path(@post_content, c), data: { confirm: '本当に削除しますか？' }, method: :delete %>
+                <% end %>
               </div>
-              <br />
+              <br>
             <% end %>
           </div>
           <% if customer_signed_in? && current_customer.email != "guest@example.com" %>
                 <%= form_with(model: [@post_content, @comment], local: true) do |f| %>
-                  <%= f.text_area :content, class: "form-control", rows: 5 %>
+                  <%= f.text_area :content, class: 'form-control', rows: 5 %>
                   <%= f.hidden_field :post_id, value: @post_content.id %>
-                  <%= button_tag type: "submit", class: "btn btn-success float-right mt-1" do %>
+                  <%= button_tag type: 'submit', class: 'btn btn-success float-right mt-1' do %>
                     <i class="far fa-comments"></i> コメントする
                   <% end %>
                 <% end %>
-              
-            
+
             <% if @post_content.favorited?(current_customer) %>
               <%= link_to post_content_favorite_path(@post_content.id), method: :delete do %>
                 <span style="color:red;">いいね❤︎</span>

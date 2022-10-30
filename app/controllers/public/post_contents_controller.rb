@@ -18,7 +18,7 @@ class Public::PostContentsController < ApplicationController
   def edit
     @post_content = PostContent.find(params[:id])
     if @post_content.customer == current_customer
-      render "edit"
+      render 'edit'
     else
       redirect_to maps_path
     end

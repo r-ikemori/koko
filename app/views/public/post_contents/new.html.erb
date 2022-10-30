@@ -1,6 +1,6 @@
 <main>
   <body>
-    
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
     <% if @post_content.errors.any? %>
       <h3 class="text-danger">!!画像を選択してください!!</h3>
@@ -21,29 +21,29 @@
                       <%#= f. :main_images, as: :file, hint: 'JPEG/PNG (1200x400)', input_html: { multiple: true } %>
                       <%= f.file_field :main_images, multiple: true %>
                     </div>
-                    
+
                   <label class="col-sm-5 col-form-label">位置情報</label>
                     <div class="col-sm-7">
                       <%= f.text_field :address, value: @address %>
-                      <%= f.hidden_field :latitude, :value => @latitude %>
-                      <%= f.hidden_field :longitude, :value => @longitude %>
-                      <%= f.hidden_field :prefectures, :value => @prefecture %>
-                    </div>    
-                    
+                      <%= f.hidden_field :latitude, value: @latitude %>
+                      <%= f.hidden_field :longitude, value: @longitude %>
+                      <%= f.hidden_field :prefectures, value: @prefecture %>
+                    </div>
+
                   <label class="col-sm-5 col-form-label">場所名</label>
                     <div class="col-sm-7">
                       <%= f.text_field :name %>
                     </div>
-        
+
                   <label class="col-sm-5 col-form-label">説明</label>
                     <div class="col-sm-7">
-                      <%= f.text_area :description, rows: 5  %>
+                      <%= f.text_area :description, rows: 5 %>
                     </div>
-                  <%= f.submit "投稿", class:"btn btn-success btn-sm" %>
+                  <%= f.submit '投稿', class: 'btn btn-success btn-sm' %>
             <% end %>
       </div>
     </div>
-    
+
     <div id='map'></div>
     <style>
      #map {
@@ -52,11 +52,11 @@
        border-radius: 35px;
        border: 15px solid #000;
      }
-     
+
 　　</style>
 　　 <script>
 　　　let map
-　　　
+
 　　　function initMap(){
         geocoder = new google.maps.Geocoder()
 

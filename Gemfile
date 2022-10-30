@@ -45,7 +45,12 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-ast'
+  gem 'rubocop-performance'
+  gem 'rubocop-rake'
+  gem 'rubocop-rspec'
   gem 'spring'
+  gem 'erb_lint'
 end
 
 group :test do

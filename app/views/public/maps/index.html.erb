@@ -1,14 +1,13 @@
-<script async defer src=<%= "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_API_KEY']}&callback=initMap" %> ></script>
+<script async defer src=<%= "https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_API_KEY', nil)}&callback=initMap" %>></script>
 
 <div class="ml-50 text-center">
   <h1>MAP</h1>
 </div>
 
 <input id="address" type="textbox" value="" placeholder="地名を入力" style="margin: 20px;">
-<input type="button" value="検索" onclick="codeAddress()" style="width:80px; height:30px; background:#CCCCFF; border-radius:10px;" >
+<input type="button" value="検索" onclick="codeAddress()" style="width:80px; height:30px; background:#CCCCFF; border-radius:10px;">
 
 <div id='map'></div>
-
 
 <style>
   #map {
@@ -20,19 +19,17 @@
   }
 </style>
 
-
-
  <div class="container">
   <div class="row m-3">
     <div class="col-8">
-      <% if customer_signed_in? && current_customer.email != "guest@example.com" %>   
-         <%= form_with model: @post_content, url:   new_post_content_path, method: :get do |f| %>
-            <%= f.hidden_field :latitude, :value => "" %>
-            <%= f.hidden_field :longitude, :value => "" %>
-            <%= f.hidden_field :address, :value => "" %>
-            <%= f.submit "この場所で投稿", class:"btn btn-success btn-sm" %>※投稿する場所をクリックor現在地ボタンをクリック後に押してください！
+      <% if customer_signed_in? && current_customer.email != "guest@example.com" %>
+         <%= form_with model: @post_content, url: new_post_content_path, method: :get do |f| %>
+            <%= f.hidden_field :latitude, value: '' %>
+            <%= f.hidden_field :longitude, value: '' %>
+            <%= f.hidden_field :address, value: '' %>
+            <%= f.submit 'この場所で投稿', class: 'btn btn-success btn-sm' %>※投稿する場所をクリックor現在地ボタンをクリック後に押してください！
          <% end %>
-      <%end%>
+      <% end %>
     </div>
     <div class="col-1"></div>
     <div class="col-3 mt-2 mb-2">
@@ -40,140 +37,135 @@
     </div>
   </div>
  </div>
- 
+
  住所：<input type="" id="map_address" name="address" value="" size="30">　緯度：<input type="" id="lat" name="lat" value="" size="20">　経度：<input type="" id="lng" name="lng" value="" size="20">
- 
- 
+
 <script>
   let map
   let markers = []
   let = infoWindow = []
-  
+
   $('.button_map').on('click', function() {
     initMap();
   });
-  
-  
-  
+
   function initMap(){
-  
+
     geocoder = new google.maps.Geocoder()
-    
+
     const successFunc = function ( position ){
       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: position.coords.latitude, lng: position.coords.longitude},
         zoom: 13,
       });
-      
+
       marker = new google.maps.Marker({
         position:  {lat: position.coords.latitude, lng: position.coords.longitude},
         map: map
       });
-      
+
       getAddress(marker.getPosition());
-      
+
       <% @post_contents.each_with_index do |post_content, i| %>
-        // 
+        //
         markerLatLng = new google.maps.LatLng({lat: <%= post_content.latitude %>, lng: <%= post_content.longitude %>})
         markers[<%= i %>] = new google.maps.Marker({ // マーカーの追加
           position: markerLatLng, // マーカーを立てる位置を指定
           map: map // マーカーを立てる地図を指定
         });
-        
+
         infoWindow[<%= i %>] = new google.maps.InfoWindow({ // 吹き出しの追加
-          content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
-          "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
-          '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
-          '<div class="info_bottom">' + '<%= link_to "詳細", post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
+          content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' +
+          "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' +
+          '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: '100x100' %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
+          '<div class="info_bottom">' + '<%= link_to '詳細', post_content_path(post_content.id), class: 'btn btn-success btn-sm' %>' + '</div>'// 吹き出しに表示する内容
         });
-  
+
         markerEvent(<%= i %>); // マーカーにクリックイベントを追加
-        
-        
+
       <% end %>
-      
+
       marker = new google.maps.Marker({});
-      
+
         lat = position.coords.latitude;
         lng = position.coords.longitude;
-   
+
         document.getElementById('lat').value = lat;
-        document.getElementById('lng').value = lng; 
-        
+        document.getElementById('lng').value = lng;
+
         <% if customer_signed_in? && current_customer.email != "guest@example.com" %>
           document.getElementById('post_content_latitude').value = lat;
           document.getElementById('post_content_longitude').value = lng;
-        <%end%>
-        
+        <% end %>
+
         map.addListener('click', function(e){
           map.panTo(e.latLng);
           getAddress(e.latLng);
           clickMap(e.latLng, map);
         });
       }
-   
+
    const errorFunc = function ( error ){
      let errorMessage = {
-  	   0: "原因不明のエラーが発生しました…。" ,
+       0: "原因不明のエラーが発生しました…。" ,
        1: "位置情報の取得が許可されませんでした…。" ,
-  	   2: "電波状況などで位置情報が取得できませんでした…。" ,
-  	   3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました…。" ,
-  	 } ;
-  	 alert( errorMessage[error.code] ) ;
-  	 map = new google.maps.Map(document.getElementById('map'), {
+       2: "電波状況などで位置情報が取得できませんでした…。" ,
+       3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました…。" ,
+     } ;
+     alert( errorMessage[error.code] ) ;
+     map = new google.maps.Map(document.getElementById('map'), {
        center: {lat: 35.6809591, lng: 139.7673068},
        zoom: 12,
      });
-  
+
       marker = new google.maps.Marker({
         position:  {lat: 35.6809591, lng: 139.7673068},
         map: map
       });
-      
+
       getAddress(marker.getPosition());
-      
+
       <% @post_contents.each_with_index do |post_content, i| %>
-        // 
+        //
         markerLatLng = new google.maps.LatLng({lat: <%= post_content.latitude %>, lng: <%= post_content.longitude %>})
         markers[<%= i %>] = new google.maps.Marker({ // マーカーの追加
            position: markerLatLng, // マーカーを立てる位置を指定
            map: map // マーカーを立てる地図を指定
         });
-        
+
         infoWindow[<%= i %>] = new google.maps.InfoWindow({ // 吹き出しの追加
-           content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' + 
-           "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' + 
-           '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: "100x100" %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
-           '<div class="info_bottom">' + '<%= link_to "詳細", post_content_path(post_content.id), class: "btn btn-success btn-sm" %>' + '</div>'// 吹き出しに表示する内容
+           content: '<div class="info">' + '<div class="info_title">' + '場所名：<%= post_content.name %>' + '</div>' + '<div class="info_description">' +
+           "<% post_content.description.split(/\R/).each do |line| %><%= line %><br><% end %>" + '</div>' + '<div class="image_slide_<%= i %> image_slide_map">' +
+           '<% post_content.main_images.each do |image| %>' + '<div class="image_size ">' + '<%= image_tag image, size: '100x100' %>' + '</div>' + '<% end %>' + '</div>' + '</div>' +
+           '<div class="info_bottom">' + '<%= link_to '詳細', post_content_path(post_content.id), class: 'btn btn-success btn-sm' %>' + '</div>'// 吹き出しに表示する内容
          });
-  
+
         markerEvent(<%= i %>); // マーカーにクリックイベントを追加
-        
+
       <% end %>
-        
+
       map.addListener('click', function(e) {
         map.panTo(e.latLng);
         getAddress(e.latLng);
         clickMap(e.latLng, map);
       });
     }
-  
-  
+
     let optionObj = {
-  	  "enableHighAccuracy": false ,
-  	  "timeout": 8000 ,
-  	  "maximumAge": 5000 ,
+      "enableHighAccuracy": false ,
+      "timeout": 8000 ,
+      "maximumAge": 5000 ,
     };
-   
+
      navigator.geolocation.getCurrentPosition(successFunc , errorFunc , optionObj ) ;
-   
+
   }
-  
+
   function getAddress(latlng) {
-  
+
     // ジオコーダのコンストラクタ
     var geocoder = new google.maps.Geocoder();
-  
+
     // geocodeリクエストを実行。
     // 第１引数はGeocoderRequest。緯度経度⇒住所の変換時はlatLngプロパティを入れればOK。
     // 第２引数はコールバック関数。
@@ -181,23 +173,22 @@
       latLng: latlng
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-  
+
         if (results[0].geometry) {
-  
+
             // 住所を取得(日本の場合だけ「日本, 」を削除)
            var address = results[0].formatted_address.split(" ")[1];
            console.log(address);
-           　　
+
             <% if customer_signed_in? && current_customer.email != "guest@example.com" %>
               document.getElementById('post_content_address').value = address;
-            <%end%>
+            <% end %>
               document.getElementById('map_address').value = address;
-            
-           
+
             marker.setMap(null);
             marker = null;
-            
-             
+
+
            marker = new google.maps.Marker({
               position: latlng,
               map: map
@@ -210,38 +201,38 @@
       }
     );
   }
-  
+
   function clickMap(geo, map) {
     lat = geo.lat();
     lng = geo.lng();
-   
+
       document.getElementById('lat').value = lat;
       document.getElementById('lng').value = lng;
-      
+
         <% if customer_signed_in? && current_customer.email != "guest@example.com" %>
            document.getElementById('post_content_latitude').value = lat;
            document.getElementById('post_content_longitude').value = lng;
-        <%end%>
-   
+        <% end %>
+
     //中心にスクロール
     map.panTo(geo);
-   
+
     //マーカーの更新
     marker.setMap(null);
     marker = null;
     marker = new google.maps.Marker({
-      map: map, position: geo 
+      map: map, position: geo
     });
   }
-  
+
   let geocoder
-  
+
   function codeAddress(){
     let inputAddress = document.getElementById('address').value;
-  
+
     geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-     
-  
+
+
       if (results != null ) {
         map.setCenter(results[0].geometry.location);
         var marker = new google.maps.Marker({
@@ -254,21 +245,21 @@
       }
     });
   }
-  
+
   // マーカーにクリックイベントを追加
   function markerEvent(i) {
-    
+
     markers[i].addListener('click', function(){ // マーカーをクリックしたとき
       console.log(infoWindow[i]);
       console.log(map);
       console.log(markers[i]);
       infoWindow[i].open(map, markers[i]); // 吹き出しの表示
     });
-    
+
     infoWindow[i].addListener('domready', function(){
       let elm = $('.image_slide_' + i);
       console.log({elm, i});
-     
+
       if (elm.not('.slick-initialized').length > 0) {
         elm.slick({ dots: true });
       }

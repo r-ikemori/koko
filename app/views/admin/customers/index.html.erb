@@ -15,7 +15,7 @@
     <tr>
       <td>
          <%= customer.id %>
-         <%= image_tag customer.get_profile_image(100,100),class:"rounded-circle icon_image mr-3 mb-3"%>
+         <%= image_tag customer.get_profile_image(100, 100), class: 'rounded-circle icon_image mr-3 mb-3' %>
     　    </td>
          <td><%= link_to admin_customer_path(customer.id) do %>
            <%= customer.name %>

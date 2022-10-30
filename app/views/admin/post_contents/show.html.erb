@@ -2,8 +2,8 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcJDsa17yjZCtsrXy3jD9ogZ_ryBFm0LA&callback=initMap" async defer></script>
   <div class="ml-50 text-center">
     <%= link_to admin_customer_path(@post_content.customer.id) do %>
-      <h3><%= @post_content.customer.name%>の投稿</h3>
-    <%end%>
+      <h3><%= @post_content.customer.name %>の投稿</h3>
+    <% end %>
   </div>
   <div class="container">
     <div class="row">
@@ -17,38 +17,37 @@
            border-radius: 35px;
            border: 15px solid #000;
          }
-         
+
     　　</style>
     　　<script>
     　　let = map
-    　　
+
     　　  function initMap(){
             map = new google.maps.Map(document.getElementById('map'), {
               center: {lat: <%= @post_content.latitude %>, lng: <%= @post_content.longitude %> },
               zoom: 15,
             });
-    
+
             marker = new google.maps.Marker({
               position:  {lat: <%= @post_content.latitude %>, lng: <%= @post_content.longitude %> },
               map: map
             });
           }
-          
+
     　　 </script>
-    　
+
 　　  </div>
-  
-    
+
       <div class="col-6 p-5">
-        
+
           <% if @post_content.main_images.attached? %>
             <div class="image_slide">
               <% @post_content.main_images.each do |image| %>
                 <div class="image_size"><%= image_tag(image, width: 450) %></div>
-              <%end%>
+              <% end %>
             </div>
           <% else %>
-            <%= image_tag 'no_image', size: "100x100" %>
+            <%= image_tag 'no_image', size: '100x100' %>
           <% end %>
         </div>
           <div class="col-8">
@@ -68,37 +67,39 @@
             <div class="col-sm-7">
               <%= @post_content.description %>
             </div>
-            
+
              <% if current_admin %>
                <div class="col-10"></div>
-               <%= link_to "削除",admin_post_content_path(@post_content), data: {confirm: '本当に削除しますか？'}, method: :delete,class:"btn btn-danger btn-sm m-3" %>
+               <%= link_to '削除', admin_post_content_path(@post_content), data: { confirm: '本当に削除しますか？' }, method: :delete,
+                                                                         class: 'btn btn-danger btn-sm m-3' %>
              <% end %>
 
             </div>
-            
+
           <div class="comment-wrapper border-top　mb-10">
             <p class="mt-5">コメント一覧</p>
           <div class="comment-index">
             <% @comments.each do |c| %>
               <div>
                 <% unless c.customer.blank? %>
-                　<%= c.created_at.strftime('%Y/%m/%d %H:%M:%S') %><br>　
+                　<%= c.created_at.strftime('%Y/%m/%d %H:%M:%S') %><br>
                   <a href="<%= customer_path(c.customer_id) %>">
-                    <%= image_tag c.customer.get_profile_image(50,50),
-                      class:"rounded-circle icon_image mr-3 mb-3"%>
+                    <%= image_tag c.customer.get_profile_image(50, 50),
+                                  class: 'rounded-circle icon_image mr-3 mb-3' %>
                   </a>
                   <% end %>
-                <%= c.customer.name unless c.customer.blank? %>
-                <br />
+                <%= c.customer.name if c.customer.present? %>
+                <br>
                 <%= c.content %>
                 <% if c %>
-                  <%= link_to '削除', admin_post_content_comment_path(@post_content, c), data: {confirm: '本当に削除しますか？'}, method: :delete %>
-                <%end%>
+                  <%= link_to '削除', admin_post_content_comment_path(@post_content, c), data: { confirm: '本当に削除しますか？' },
+                                                                                       method: :delete %>
+                <% end %>
               </div>
-              <br />
+              <br>
             <% end %>
           </div>
-        
+
           <h5>いいね件数: <%= @post_content.favorites.count %></h5>
         </div>
       </div>

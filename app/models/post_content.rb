@@ -9,7 +9,7 @@ class PostContent < ApplicationRecord
   validates :main_images, presence: true
 
   def favorited?(customer)
-    favorites.where(customer_id: customer.id).exists?
+    favorites.exists?(customer_id: customer.id)
   end
 
   def get_profile_image(width, height)

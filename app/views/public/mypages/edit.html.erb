@@ -1,13 +1,13 @@
 <div class="container mx-auto" style="width: 1000px;">
   <p id="notice"></p>
      <h4>マイページ編集</h4>
-     <%= form_with model: @customer, url: mypage_path, id: "form" do |f| %>
+     <%= form_with model: @customer, url: mypage_path, id: 'form' do |f| %>
        <div>
-         <%= f.file_field :profile_image, style: "display: none;", id: "file_field", onchange: "form_submit()" %>
+         <%= f.file_field :profile_image, style: 'display: none;', id: 'file_field', onchange: 'form_submit()' %>
          <% if @customer.profile_image.attached? %>
-           <%= image_tag @customer.get_profile_image(100,100), id: "profile_img", class: "rounded-circle", size: "150x150"  %>
+           <%= image_tag @customer.get_profile_image(100, 100), id: 'profile_img', class: 'rounded-circle', size: '150x150' %>
          <% else %>
-           <%= image_tag 'no_image.jpg', size: "100x100", id: "profile_img"  %>
+           <%= image_tag 'no_image.jpg', size: '100x100', id: 'profile_img' %>
          <% end %>
        </div>
 
@@ -28,7 +28,7 @@
           </div>
         </div>
 
-       <%= f.submit "変更を保存", class:"btn btn-success" %>
+       <%= f.submit '変更を保存', class: 'btn btn-success' %>
      <% end %>
  </div>
 

@@ -3,9 +3,9 @@
     <div class="col-4">
       <h3>プロフィール</h3>
         <% if @customer.profile_image.attached? %>
-            <%= image_tag @customer.get_profile_image(200,200), class: "rounded-circle", size: "150x150" %>
+            <%= image_tag @customer.get_profile_image(200, 200), class: 'rounded-circle', size: '150x150' %>
         <% else %>
-           <%= image_tag 'no_image.jpg', class: "rounded-circle", size: "100x100" %>
+           <%= image_tag 'no_image.jpg', class: 'rounded-circle', size: '100x100' %>
         <% end %>
     </div>
     <div class="col-6 profile_image">
@@ -16,30 +16,30 @@
           <div><%= @customer.introduction %></div>
       </div>
     </div>
-    </div>  
-  </div>    
+    </div>
+  </div>
 </div>
       <div class="">
         <% if current_customer == @customer %>
-          <%= link_to "退会", confirm_mypage_path, class: 'btn btn-outline-dark m-5 btn-danger' %>
-          <%= link_to "編集", edit_mypage_path, class: 'btn btn-outline-dark m-5 btn-success' %>
-          <%= link_to"いいね一覧",favorites_path, class: 'btn btn-outline-dark m-5 btn-warning' %>
-        <%end%>
+          <%= link_to '退会', confirm_mypage_path, class: 'btn btn-outline-dark m-5 btn-danger' %>
+          <%= link_to '編集', edit_mypage_path, class: 'btn btn-outline-dark m-5 btn-success' %>
+          <%= link_to 'いいね一覧', favorites_path, class: 'btn btn-outline-dark m-5 btn-warning' %>
+        <% end %>
       </div>
-      
+
 <h3 class="m-5 bg-primary text-center">投稿一覧</h3>
-<% @post_contents.each do |post|%>
+<% @post_contents.each do |post| %>
  <div class="container" style="margin-top: 50px;">
     <div class="row">
       <div class="col-5 image_frame">
           <% if post.main_images.attached? %>
             <div class="image_slide m-4">
                 <% post.main_images.each do |image| %>
-                  <div class="image_size"><%= image_tag(image, size: "200x200") %></div>
-                <%end%>
+                  <div class="image_size"><%= image_tag(image, size: '200x200') %></div>
+                <% end %>
               </div>
             <% else %>
-              <%= image_tag 'no_image', size: "100x100" %>
+              <%= image_tag 'no_image', size: '100x100' %>
             <% end %>
       </div>
        <div class="col-1"></div>
@@ -50,7 +50,7 @@
            <div class="col-sm-7">
              <%= link_to post_content_path(post.id) do %>
                <%= post.address %>
-             <%end%>
+             <% end %>
            </div>
 
             <label class="col-sm-5 col-form-label">場所名</label>
@@ -64,7 +64,7 @@
             </div>
     </div>
   </div>
-<%end%>
+<% end %>
 
 <script>
   $(function() {
